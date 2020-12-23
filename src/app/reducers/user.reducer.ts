@@ -8,6 +8,8 @@ const defaultUser = new User(null, 'Guest');
 // tslint:disable-next-line:typedef
 export function userReducer(state: User = defaultUser, action: Action) {
   switch (action.type) {
+    case '[USER] Login':
+      return {...state, ...action.payload, loading: false};
     case '[USER] Register':
       return {...state, ...action.payload, loading: false};
     case '[USER] Get user':

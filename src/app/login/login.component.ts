@@ -23,14 +23,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.store.select('user');
-    // this.store.dispatch(new userActions.GetUser());
+    this.store.dispatch(new userActions.GetUser());
   }
 
   // tslint:disable-next-line:typedef
   async login() {
     console.log('Started login event');
     const payload = {email: this.email, password: this.password};
-    this.store.dispatch(new userActions.Register(payload));
+    this.store.dispatch(new userActions.Login(payload));
     // if (this.user.uid) {
     //
     //   await this.router.navigate(['/home']);

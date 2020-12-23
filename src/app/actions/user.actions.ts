@@ -1,5 +1,4 @@
 import {Action} from '@ngrx/store';
-import {IUser, User} from '../models/user.model';
 
 export const GET_USER = '[USER] Get user';
 export const AUTHENTICATED = '[USER] Authenticated';
@@ -41,6 +40,7 @@ export class LogError implements Action {
 
   }
 }
+
 export class Register implements Action {
   readonly type = REGISTER;
 
@@ -49,10 +49,20 @@ export class Register implements Action {
   }
 }
 
+export class Login implements Action {
+  readonly type = LOGIN;
+
+  constructor(public payload?: any) {
+
+  }
+}
+
+
 export type All
   = GetUser
   | Authenticated
   | NotAuthenticated
   | LogError
-  | Register;
+  | Register
+  | Login;
 

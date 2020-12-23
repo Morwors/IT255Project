@@ -34,18 +34,21 @@ export class UserEffects {
   constructor(private actions: Actions, private authenticationService: AuthenticationService) {
   }
 
-  // @Effect()
-  // getUser: Observable<Action> = this.actions.pipe(
-  //   ofType(userActions.GET_USER),
-  //   map((action: userActions.GetUser) => action.payload),
-  //   switchMap(payload => LoginHelper.checkLoginState()),
-  //   map(authData => {
-  //     if (authData) {
-  //       console.log('User logged in');
-  //       const user = new User(authData.uid, authData.displayName);
-  //     }
-  //   })
-  // );
+  @Effect()
+  getUser: Observable<Action> = this.actions.pipe(
+    ofType(userActions.GET_USER),
+    map((action: userActions.GetUser) => action.payload),
+    switchMap(payload => this.authenticationService.getCurrentUser()),
+    map(authData => {
+      if (authData) {
+        console.log('User logged in');
+        const user = new User(authData.uid, authData.email);
+        return new userActions.Authenticated(user);
+      } else {
+        return new userActions.NotAuthenticated();
+      }
+    })
+  );
   @Effect()
   register: Observable<Action> = this.actions.pipe(
     ofType(userActions.REGISTER),
@@ -63,6 +66,27 @@ export class UserEffects {
       console.log('Credentials: ', credential);
       const user = new User(credential.username, credential.displayName);
       return new userActions.Authenticated(user);
+      //
+      // return new userActions.GetUser();
+    })
+  );
+  @Effect()
+  login: Observable<Action> = this.actions.pipe(
+    ofType(userActions.LOGIN),
+    map((action: userActions.GetUser) => action.payload),
+    switchMap(payload => this.authenticationService.LogIn(payload)),
+    map(user => {
+      if (user) {
+        const currentUser = this.authenticationService.getCurrentUser();
+        console.log('User: ', user.email);
+        const userObj = new User(user.uid, user.email);
+
+        return new userActions.Authenticated(userObj);
+        // return new userActions.Authenticated(user);
+      } else {
+        return new userActions.NotAuthenticated();
+      }
+
       //
       // return new userActions.GetUser();
     })
