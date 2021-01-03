@@ -10,6 +10,7 @@ import {map, switchMap} from 'rxjs/operators';
 import * as userActions from '../actions/user.actions';
 
 import {AuthenticationService} from '../services/authentication.service';
+import {Router} from '@angular/router';
 
 export type Action = userActions.All;
 
@@ -31,7 +32,7 @@ export type Action = userActions.All;
 
 @Injectable()
 export class UserEffects {
-  constructor(private actions: Actions, private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private actions: Actions, private authenticationService: AuthenticationService) {
   }
 
   @Effect()
@@ -73,7 +74,7 @@ export class UserEffects {
   @Effect()
   login: Observable<Action> = this.actions.pipe(
     ofType(userActions.LOGIN),
-    map((action: userActions.GetUser) => action.payload),
+    map((action: userActions.Login) => action.payload),
     switchMap(payload => this.authenticationService.LogIn(payload)),
     map(user => {
       if (user) {
@@ -89,6 +90,38 @@ export class UserEffects {
 
       //
       // return new userActions.GetUser();
+    })
+  );
+  @Effect()
+  facebookLogin: Observable<Action> = this.actions.pipe(
+    ofType(userActions.FACEBOOK_LOGIN),
+    map((action: userActions.FacebookLogin) => {
+      console.log('Payload');
+      return action.payload;
+    }),
+    switchMap(payload => {
+      console.log('Starting in payload');
+      return this.authenticationService.FacebookLogin();
+    }),
+    map(user => {
+      if (user) {
+        console.log('User: ', user.email);
+        const userObj = new User(user.uid, user.email);
+        return new userActions.Authenticated(userObj);
+      } else {
+        return new userActions.NotAuthenticated();
+      }
+
+      //
+      // return new userActions.GetUser();
+    })
+  );
+  @Effect()
+  logout: Observable<Action> = this.actions.pipe(
+    ofType(userActions.LOGOUT),
+    map((action: userActions.Logout) => {
+      this.authenticationService.logout();
+      return new userActions.NotAuthenticated();
     })
   );
 

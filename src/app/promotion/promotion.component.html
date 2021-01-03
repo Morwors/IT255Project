@@ -1,0 +1,17 @@
+<ng-template #promotionContainer>
+  <tr>
+    <td><a href="pages/examples/invoice.html">{{promotion.promotion_id}}</a></td>
+    <td>{{promotion.promotion_description}}</td>
+    <td><span class="badge badge-{{promotionType}}">{{promotionState}}</span></td>
+    <td>
+      <div class="sparkbar" data-color="#00a65a" data-height="20">{{promotion.date_from|date}}</div>
+    </td>
+    <td>
+      <div class="sparkbar" data-color="#00a65a" data-height="20">{{promotion.date_to|date}}</div>
+    </td>
+    <td>
+      <div class="sparkbar" data-color="#00a65a" data-height="20">{{promotion.users}}</div>
+    </td>
+  </tr>
+</ng-template>
+

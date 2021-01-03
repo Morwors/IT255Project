@@ -3,8 +3,10 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable} from 'rxjs';
 import firebase from 'firebase';
 import User = firebase.User;
+import * as UserModel from '../models/user.model';
 import {trace} from '@angular/fire/performance';
 import {map} from 'rxjs/operators';
+import auth = firebase.auth;
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,18 @@ export class AuthenticationService {
   }
 
   // tslint:disable-next-line:typedef
+  async FacebookLogin() {
+    console.log('Facebook async login inited');
+    return this.angularFireAuth.signInWithPopup(new auth.FacebookAuthProvider())
+      .then((result) => {
+        return result.user;
+      }).catch((error) => {
+        console.log('Login error: ', error);
+        return null;
+      });
+  }
+
+  // tslint:disable-next-line:typedef
   async checkLoginState() {
     return this.angularFireAuth.authState.pipe(
       map(u => !u)).subscribe(isLoggedIn => {
@@ -57,19 +71,23 @@ export class AuthenticationService {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  getCurrentUser() {
+
+  getCurrentUser(): Observable<firebase.User> {
     return this.userData.pipe(
       map(user => {
         return user;
       })
     );
-    // return firebase.auth().currentUser;
-    // return this.angularFireAuth.user.subscribe((data => {
-    //   console.log('User is: ', data.displayName);
-    //   return data;
-    // }));
   }
 
+  // tslint:disable-next-line:typedef
+  getUserUID() {
+    return firebase.auth().currentUser.uid;
+  }
+
+  // tslint:disable-next-line:typedef
+  async logout() {
+    await this.angularFireAuth.signOut();
+  }
 
 }

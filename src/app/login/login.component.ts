@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import * as userActions from '../actions/user.actions';
 import {User} from '../models/user.model';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {first, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,20 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.store.select('user');
     this.store.dispatch(new userActions.GetUser());
+    this.user.pipe(
+      map((val) => {
+        console.log('Mapping user');
+        console.log('Got user: ', val.uid);
+        if (val.uid) {
+          this.router.navigate(['/home']);
+        }
+      })
+    );
+
+
+    // if (this.user) {
+    //   this.router.navigate(['/home']);
+    // }
   }
 
   // tslint:disable-next-line:typedef
@@ -31,11 +46,13 @@ export class LoginComponent implements OnInit {
     console.log('Started login event');
     const payload = {email: this.email, password: this.password};
     this.store.dispatch(new userActions.Login(payload));
-    // if (this.user.uid) {
-    //
-    //   await this.router.navigate(['/home']);
-    // }
-    // console.log('Username is:', this.username, 'password is:', this.password);
+  }
+
+  // tslint:disable-next-line:typedef
+  async facebookLogin() {
+    console.log('Starting facebook login');
+    await this.store.dispatch(new userActions.FacebookLogin());
+
   }
 
 

@@ -8,7 +8,9 @@ export interface IUser {
   loading?: boolean;
 }
 
+
 export class User {
-  constructor(public uid: string, public username: string) {}
+  constructor(public uid: string, public username: string, public photo?: string) {
+  }
 
 }

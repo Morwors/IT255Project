@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div>
+    <div class="form-row">
+      <div class="col">
+        <input [(ngModel)]="dateFrom" type="date" class="form-control">
+      </div>
+      <div class="col">
+        <input type="date" [(ngModel)]="dateTo" class="form-control">
+      </div>
+    </div>
+    <br>
+    <div class="form-row">
+      <input [(ngModel)]="promotionDescription" type="text" class="form-control" placeholder="Description...">
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-outline-dark" (click)="postPromotion()">Post</button>
+</div>

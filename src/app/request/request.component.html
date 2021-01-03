@@ -1,0 +1,20 @@
+<ng-template #requestContainer>
+  <tr>
+    <td><a href="pages/examples/invoice.html">{{request.id}}</a></td>
+    <td><a href="pages/examples/invoice.html">{{request.user.uid}}</a></td>
+    <td>{{request.user.username}}</td>
+    <td>{{request.venue.username}}</td>
+    <td><span class="badge badge-success">{{request.completed}}</span></td>
+    <td>
+      <div class="sparkbar" data-color="#00a65a" data-height="20">{{request.allowed}}</div>
+    </td>
+    <td>
+      <div class="sparkbar" data-color="#00a65a" data-height="20">{{request.timestamp|date}}</div>
+    </td>
+    <td>
+      <button type="button" class="btn btn-success" (click)="action(true)">Allow</button>
+      <button type="button" class="btn btn-danger" (click)="action(false)">Reject</button>
+    </td>
+  </tr>
+</ng-template>
+

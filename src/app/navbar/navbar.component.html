@@ -7,10 +7,10 @@
       </a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" class="nav-link">Home</a>
+      <a routerLink="" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Contact</a>
+      <a routerLink="search" class="nav-link">Request</a>
     </li>
   </ul>
 
@@ -25,7 +25,10 @@
       </div>
     </div>
   </form>
-  <p>User: {{user$}}</p>
+  <div *ngIf="user$|async as u">
+    <p class="login-box-msg">Welcome: {{u.username}}</p>
+  </div>
+
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->

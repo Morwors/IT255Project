@@ -5,14 +5,31 @@ import {HomeComponent} from './home/home.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthRoutingModule} from './auth/auth-routing.module';
 import {HomestackComponent} from './homestack/homestack.component';
+import {CollectionComponent} from './collection/collection.component';
+import {AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import {OwnerComponent} from './owner/owner.component';
+import {VenueSearchComponent} from './venue-search/venue-search.component';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
+const redirectAuthorizedTo = () => redirectLoggedInTo(['/home']);
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {
+    path: '',
+    component: LoginComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectAuthorizedTo},
+  },
   {
     path: 'home',
     component: HomestackComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin},
     children: [
-      {path: '', component: HomeComponent},
+      {path: '', component: CollectionComponent},
+      {path: 'venue/:id', component: HomeComponent},
+      {path: 'owner', component: OwnerComponent},
+      {path: 'search', component: VenueSearchComponent}
     ]
   },
 ];

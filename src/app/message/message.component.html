@@ -1,0 +1,36 @@
+<div>
+  <div class="direct-chat-msg" *ngIf="message.sentBy!==id">
+    <div class="direct-chat-infos clearfix">
+      <span class="direct-chat-name float-left">{{user.username}}</span>
+      <span class="direct-chat-timestamp float-right">{{message.timestamp | date:'yyyy-MM-dd'}}</span>
+    </div>
+    <!-- /.direct-chat-infos -->
+        <img class="direct-chat-img" src="{{user.photo}}" alt="message user image">
+    <!-- /.direct-chat-img -->
+    <div class="direct-chat-text" *ngIf="message.type==='text'">
+      {{message.message}}
+    </div>
+    <div class="direct-chat-text" *ngIf="message.type==='img'">
+      <img style="height: 250px" src="{{message.message}}" alt="Message image">
+    </div>
+    <!-- /.direct-chat-text -->
+  </div>
+  <div class="direct-chat-msg right" *ngIf="message.sentBy===id">
+    <div class="direct-chat-infos clearfix">
+      <span class="direct-chat-name float-right">You</span>
+      <span class="direct-chat-timestamp float-left">{{message.timestamp | date:'yyyy-MM-dd'}}</span>
+    </div>
+    <!-- /.direct-chat-infos -->
+<!--    <img class="direct-chat-img" src="{{user.photo}}" alt="message user image">-->
+    <!-- /.direct-chat-img -->
+    <div class="direct-chat-text" *ngIf="message.type==='text'">
+      {{message.message}}
+    </div>
+    <div class="direct-chat-text" *ngIf="message.type==='img'">
+      <img style="height: 250px" src="{{message.message}}" alt="Message image">
+    </div>
+    <!-- /.direct-chat-text -->
+  </div>
+
+</div>
+
