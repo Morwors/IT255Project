@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
   faMinus = faMinus;
   public messageText: string;
 
+
   venue: Observable<IVenue>;
   statistics: Observable<IStatistics>;
   checkins: Observable<ICheckins>;
@@ -75,8 +76,9 @@ export class HomeComponent implements OnInit {
     modalRef.componentInstance.menuID = menuID;
     modalRef.componentInstance.venueID = this.id;
   }
+
   // tslint:disable-next-line:typedef
-  openPromotionModal(){
+  openPromotionModal() {
     const modalRef = this.modalService.open(PromotionModalComponent);
     modalRef.componentInstance.venueID = this.id;
   }

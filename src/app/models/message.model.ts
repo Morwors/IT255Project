@@ -8,9 +8,7 @@ export interface IMessage {
   type?: string;
   id?: string;
   user?: IUser;
-
 }
-
 export interface IMessageList {
   messages: IMessage[];
   page: number;

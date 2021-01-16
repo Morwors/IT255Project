@@ -46,13 +46,14 @@ export class LoginComponent implements OnInit {
     console.log('Started login event');
     const payload = {email: this.email, password: this.password};
     this.store.dispatch(new userActions.Login(payload));
+    await this.router.navigate(['/home']);
   }
 
   // tslint:disable-next-line:typedef
   async facebookLogin() {
     console.log('Starting facebook login');
     await this.store.dispatch(new userActions.FacebookLogin());
-
+    await this.router.navigate(['/home']);
   }
 
 

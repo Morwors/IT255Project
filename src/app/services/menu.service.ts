@@ -65,6 +65,7 @@ export class MenuService {
 
   // tslint:disable-next-line:typedef
   async uploadPhoto(venueID, photo) {
+    console.log('Photo: ', photo);
     try {
       if (!photo) {
         return;
@@ -72,6 +73,7 @@ export class MenuService {
       const formdata = new FormData();
       formdata.append('photo', photo);
       formdata.append('venueID', venueID || ' ');
+      console.log('Form: ', formdata);
       await axios.post(serverIP + '/venues/uploadMenu',
         formdata,
         {
